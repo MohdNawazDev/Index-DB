@@ -21,6 +21,7 @@ openDBReq.onsuccess = (e) => {
     let storeObject = transaction.objectStore("Student Table");
 
 
+    //creating
     // let request = storeObject.add({
     //     id: 2, 
     //     name: "Mohd Nawaz",
@@ -37,6 +38,7 @@ openDBReq.onsuccess = (e) => {
     let objectStore = transaction.objectStore("Student Table")
     let delteThree = objectStore.delete(4);
 
+    //Accessing
     // we can specify the range in this
     // let request = storeObject.get(1); 
     // let request = storeObject.getAll(IDBKeyRange.bound(1, 2)); 
@@ -45,6 +47,8 @@ openDBReq.onsuccess = (e) => {
     //create a index 
     // let index = storeObject.index("name")
     // let request = index.get("Mohd Nawaz")
+
+    
     console.log(delteThree);
 
 
@@ -69,22 +73,20 @@ openDBReq.onsuccess = (e) => {
 
     //WE generally used this method for iteration 
 
-    // let request = storeObject.openCursor();
+    let request = storeObject.openCursor();
 
-    // request.onsuccess = (e) => {
-    //     let cursor = request.result;
-    //     console.log("iteration");
+    request.onsuccess = (e) => {
+        let cursor = request.result;
+        console.log("iteration", cursor);
         
-    //     if(cursor){
-    //         let {key, value} = cursor;
-    //         console.log(key, value);
-    //         cursor.continue();
-    //     }
+        if(cursor){
+            let {key, value} = cursor;
+            console.log(key, value);
+            cursor.continue();
+        }
 
-    // }
+    }
     
-
-
 }
 
 
@@ -92,6 +94,7 @@ openDBReq.onsuccess = (e) => {
 openDBReq.onupgradeneeded = (e) => {
     console.log("Upgraded needed");
 
+    //for schema 
     let db = openDBReq.result;
     if(!db.objectStoreNames.contains("Student Table")){
         let request = db.createObjectStore("Student Table", {keyPath: "id"}); //in keypath we provide id that is primary key
